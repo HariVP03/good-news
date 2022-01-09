@@ -8,7 +8,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "build": "cd client && yarn build"
+    "build": "cd client && npm run build"
   },
   "dependencies": {
     "express": "^4.17.2",
