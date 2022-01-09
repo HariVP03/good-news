@@ -38,6 +38,11 @@
   "author": "Hari Vishnu Parashar",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "@types/node": "^16.7.13",
+    "@types/reach__router": "^1.3.10",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "prettier": "^2.5.1"
   }
 }
