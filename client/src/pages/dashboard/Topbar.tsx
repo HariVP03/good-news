@@ -1,7 +1,7 @@
 import { chakra, Flex, Image } from '@chakra-ui/react';
 import React from 'react';
 
-const Topbar: React.FC = () => {
+const Topbar: React.FC<{ name: string | undefined }> = ({ name }) => {
   return (
     <Flex w="full" align="center" h="full" color="white" pl={5}>
       <chakra.h2 fontSize="35px">🌞</chakra.h2>
@@ -19,7 +19,7 @@ const Topbar: React.FC = () => {
         fontWeight="bold"
         color="gray.400"
       >
-        Hari
+        {name}
       </chakra.h2>
     </Flex>
   );

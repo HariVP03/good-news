@@ -1,9 +1,14 @@
 import React from 'react';
 import { Avatar, Button, chakra, Flex } from '@chakra-ui/react';
+import { navigate } from '@reach/router';
 
-const PanelButton: React.FC<{ children: string }> = ({ children }) => {
+const PanelButton: React.FC<{ children: string; onClick: () => void }> = ({
+  children,
+  onClick,
+}) => {
   return (
     <Button
+      onClick={onClick}
       fontFamily="'Karla', sans-serif;"
       bg="#101724"
       h="50px"
@@ -19,7 +24,9 @@ const PanelButton: React.FC<{ children: string }> = ({ children }) => {
   );
 };
 
-const SidePanel: React.FC = () => {
+const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
+  profilePhoto,
+}) => {
   return (
     <Flex w="full" h="full" direction="column">
       <Flex
@@ -31,7 +38,7 @@ const SidePanel: React.FC = () => {
         borderBottom="1px solid"
         borderBottomColor="gray.700"
       >
-        <Avatar size="md" />
+        <Avatar border="2px solid green" src={profilePhoto || ''} size="md" />
         <chakra.h2
           fontSize="18px"
           color="gray.200"
@@ -49,9 +56,27 @@ const SidePanel: React.FC = () => {
         </chakra.h2>
       </Flex>
       <Flex w="full" h="75%" mt={4} direction="column">
-        <PanelButton>Home</PanelButton>
-        <PanelButton>Subscribe to Newsletter</PanelButton>
-        <PanelButton>Back to the frontpage</PanelButton>
+        <PanelButton
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          Home
+        </PanelButton>
+        <PanelButton
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          Subscribe to Newsletter
+        </PanelButton>
+        <PanelButton
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          Back to the frontpage
+        </PanelButton>
       </Flex>
     </Flex>
   );
