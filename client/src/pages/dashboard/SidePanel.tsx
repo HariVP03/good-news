@@ -38,7 +38,7 @@ const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
         borderBottom="1px solid"
         borderBottomColor="gray.700"
       >
-        <Avatar border="2px solid green" src={profilePhoto || ''} size="md" />
+        <Avatar src={profilePhoto || ''} size="md" />
         <chakra.h2
           fontSize="18px"
           color="gray.200"
