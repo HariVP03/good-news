@@ -1,6 +1,8 @@
 import React from 'react';
 import { Avatar, Button, chakra, Flex } from '@chakra-ui/react';
 import { navigate } from '@reach/router';
+import Clock from 'react-live-clock';
+import months from '../../utilities/month';
 
 const PanelButton: React.FC<{ children: string; onClick: () => void }> = ({
   children,
@@ -27,6 +29,11 @@ const PanelButton: React.FC<{ children: string; onClick: () => void }> = ({
 const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
   profilePhoto,
 }) => {
+  const dateObj = new Date();
+  const date = dateObj.getDate().toString();
+  const month = months[dateObj.getMonth()];
+  const year = dateObj.getFullYear().toString();
+  const formattedDate = `${month} ${date}, ${year}`;
   return (
     <Flex w="full" h="full" direction="column">
       <Flex
@@ -45,14 +52,14 @@ const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
           mt={2}
           fontFamily="'Karla', sans-serif;"
         >
-          Jan 08, 2022
+          {formattedDate}
         </chakra.h2>
         <chakra.h2
           fontSize="18px"
           color="gray.400"
           fontFamily="'Karla', sans-serif;"
         >
-          19:52
+          <Clock format="hh:mm" ticking />
         </chakra.h2>
       </Flex>
       <Flex w="full" h="75%" mt={4} direction="column">
