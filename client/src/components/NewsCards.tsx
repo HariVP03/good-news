@@ -88,6 +88,7 @@ export const WeatherCard: React.FC<{
   loading: boolean;
 }> = ({ city, icon, temp, desc, loading }) => {
   const toTitleCase = (f: string) => {
+    if (!f) return f;
     let r = f[0].toUpperCase();
     return r + f.slice(1, f.length);
   };
