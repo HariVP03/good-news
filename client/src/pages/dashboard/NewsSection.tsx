@@ -39,6 +39,7 @@ const NewsSection: React.FC = () => {
       p={5}
       align="space-between"
       flexWrap="wrap"
+      gap={10}
       pb="15vh"
     >
       <NewsCardWide
@@ -52,6 +53,10 @@ const NewsSection: React.FC = () => {
       <WeatherCard
         loading={loading}
         city={data?.name}
+        humidity={data?.main.humidity}
+        minTemp={data?.main.temp_min}
+        maxTemp={data?.main.temp_max}
+        pressure={data?.main.pressure}
         desc={data?.weather[0].description}
         icon={icon}
         temp={data?.main.temp}

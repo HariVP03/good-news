@@ -86,14 +86,28 @@ export const WeatherCard: React.FC<{
   temp: number;
   desc: string;
   loading: boolean;
-}> = ({ city, icon, temp, desc, loading }) => {
+  minTemp: string;
+  maxTemp: string;
+  humidity: number;
+  pressure: number;
+}> = ({
+  city,
+  icon,
+  temp,
+  desc,
+  loading,
+  humidity,
+  pressure,
+  minTemp,
+  maxTemp,
+}) => {
   const toTitleCase = (f: string) => {
     if (!f) return f;
     let r = f[0].toUpperCase();
     return r + f.slice(1, f.length);
   };
   return (
-    <AnimateCard styles={{ height: '180px' }}>
+    <AnimateCard styles={{ height: '300px', marginBottom: '15px' }}>
       <Flex
         mx={2}
         w="300px"
@@ -118,10 +132,12 @@ export const WeatherCard: React.FC<{
               <Image
                 src={icon || ''}
                 size="sm"
+                w="50px"
+                h="50px"
                 objectFit="cover"
                 rounded="full"
               />
-              <Flex direction="column" ml={5}>
+              <Flex direction="column" ml={1}>
                 <Flex align="center">
                   <chakra.h2 fontsize="18px">{temp}</chakra.h2>
                   <chakra.h2 fontSize="18px" color="gray.400">
@@ -131,6 +147,36 @@ export const WeatherCard: React.FC<{
                 <chakra.h2 fontSize="20px" color="gray.400">
                   {toTitleCase(desc)}
                 </chakra.h2>
+                <Flex align="center" mt={5}>
+                  <chakra.h2 color="gray.400" fontSize="19px">
+                    Min Temp&nbsp;
+                  </chakra.h2>
+                  <chakra.h2>{minTemp}</chakra.h2>
+                  <chakra.h2 fontSize="18px" color="gray.400">
+                    °F
+                  </chakra.h2>
+                </Flex>
+                <Flex align="center">
+                  <chakra.h2 color="gray.400" fontSize="19px">
+                    Max Temp&nbsp;
+                  </chakra.h2>
+                  <chakra.h2>{maxTemp}</chakra.h2>
+                  <chakra.h2 fontSize="18px" color="gray.400">
+                    °F
+                  </chakra.h2>
+                </Flex>
+                <Flex align="center">
+                  <chakra.h2 color="gray.400" fontSize="19px">
+                    Humidity&nbsp;
+                  </chakra.h2>
+                  <chakra.h2>{humidity}</chakra.h2>
+                </Flex>
+                <Flex align="center">
+                  <chakra.h2 color="gray.400" fontSize="19px">
+                    Pressure&nbsp;
+                  </chakra.h2>
+                  <chakra.h2>{pressure}</chakra.h2>
+                </Flex>
               </Flex>
             </Flex>
           </Flex>
