@@ -16,8 +16,8 @@ const Dashboard: React.FC = () => {
     }
   });
   return (
-    <Flex w="100vw" h="100vh" bg="#101724">
-      <Flex h="100%" w="25%">
+    <Flex maxW="100vw" h="100vh" bg="#101724">
+      <Flex h="100%" w="25%" overflow="hidden">
         <SidePanel profilePhoto={user?.photoURL} />
       </Flex>
       <Flex direction="column" h="100%" w="75%">

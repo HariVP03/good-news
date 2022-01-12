@@ -35,7 +35,7 @@ const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
   const year = dateObj.getFullYear().toString();
   const formattedDate = `${month} ${date}, ${year}`;
   return (
-    <Flex w="full" h="full" direction="column">
+    <Flex zIndex="10" position="static" w="full" h="full" direction="column">
       <Flex
         w="full"
         direction="column"
@@ -59,7 +59,7 @@ const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
           color="gray.400"
           fontFamily="'Karla', sans-serif;"
         >
-          <Clock format="hh:mm" ticking />
+          <Clock format="h:mm A" ticking />
         </chakra.h2>
       </Flex>
       <Flex w="full" h="75%" mt={4} direction="column">

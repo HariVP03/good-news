@@ -10,6 +10,7 @@
     "firebase": "^9.6.2",
     "framer-motion": "^5.5.6",
     "moment-timezone": "^0.5.34",
+    "perfect-scrollbar": "^1.5.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-live-clock": "^5.5.1",

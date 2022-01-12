@@ -17,7 +17,7 @@ export const NewsCardWide: React.FC<{
   const formattedDate = `${month} ${date1}, ${year}`;
 
   return (
-    <AnimateCard styles={{ height: '300px' }}>
+    <AnimateCard styles={{ height: '300px', marginBottom: '15px' }}>
       <Flex
         mx={2}
         minW="600px"
@@ -96,8 +96,8 @@ export const WeatherCard: React.FC<{
     <AnimateCard styles={{ height: '180px' }}>
       <Flex
         mx={2}
-        maxW="300px"
-        h="180px"
+        w="300px"
+        h="300"
         cursor="pointer"
         bg="#101724"
         rounded="lg"
