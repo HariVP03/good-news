@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, chakra, Flex, Image } from '@chakra-ui/react';
+import { Avatar, chakra, Flex, Icon, Image, Spinner } from '@chakra-ui/react';
 import { AnimateCard, AnimateDiv } from '../animations/scaleAnimation';
 import months from '../utilities/month';
 
@@ -19,6 +19,7 @@ export const NewsCardWide: React.FC<{
   return (
     <AnimateCard styles={{ height: '300px' }}>
       <Flex
+        mx={2}
         minW="600px"
         h="300px"
         cursor="pointer"
@@ -74,6 +75,65 @@ export const NewsCardWide: React.FC<{
             </Flex>
           </Flex>
         </Flex>
+      </Flex>
+    </AnimateCard>
+  );
+};
+
+export const WeatherCard: React.FC<{
+  city: string;
+  icon: string | null | undefined;
+  temp: number;
+  desc: string;
+  loading: boolean;
+}> = ({ city, icon, temp, desc, loading }) => {
+  const toTitleCase = (f: string) => {
+    let r = f[0].toUpperCase();
+    return r + f.slice(1, f.length);
+  };
+  return (
+    <AnimateCard styles={{ height: '180px' }}>
+      <Flex
+        mx={2}
+        maxW="300px"
+        h="180px"
+        cursor="pointer"
+        bg="#101724"
+        rounded="lg"
+        boxShadow="lg"
+        p={4}
+        fontFamily="'Karla', sans-serif;"
+        color="gray.200"
+        fontWeight="bold"
+        overflowWrap="normal"
+        direction="column"
+      >
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Flex direction="column">
+            <chakra.h2 color="gray.400">{city}</chakra.h2>
+            <Flex fontSize="25px">
+              <Image
+                src={icon || ''}
+                size="sm"
+                objectFit="cover"
+                rounded="full"
+              />
+              <Flex direction="column" ml={5}>
+                <Flex align="center">
+                  <chakra.h2 fontsize="18px">{temp}</chakra.h2>
+                  <chakra.h2 fontSize="18px" color="gray.400">
+                    °F
+                  </chakra.h2>
+                </Flex>
+                <chakra.h2 fontSize="20px" color="gray.400">
+                  {toTitleCase(desc)}
+                </chakra.h2>
+              </Flex>
+            </Flex>
+          </Flex>
+        )}
       </Flex>
     </AnimateCard>
   );
