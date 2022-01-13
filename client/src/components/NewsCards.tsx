@@ -122,6 +122,8 @@ export const WeatherCard: React.FC<{
         fontWeight="bold"
         overflowWrap="normal"
         direction="column"
+        justify={loading ? 'center' : 'start'}
+        align={loading ? 'center' : 'start'}
       >
         {loading ? (
           <Spinner />
@@ -181,6 +183,69 @@ export const WeatherCard: React.FC<{
             </Flex>
           </Flex>
         )}
+      </Flex>
+    </AnimateCard>
+  );
+};
+
+export const NewsCardSmall: React.FC<{
+  views: number;
+  title: string;
+  thumbnail: string;
+}> = ({ views, title, thumbnail }) => {
+  return (
+    <AnimateCard styles={{ height: '150px', marginBottom: '15px' }}>
+      <Flex
+        mx={2}
+        w="350px"
+        py={2}
+        h="150px"
+        cursor="pointer"
+        bg="#101724"
+        rounded="lg"
+        overflow="clip"
+        align="center"
+        justify="space-around"
+        boxShadow="lg"
+        px={2}
+      >
+        <Image
+          src={thumbnail}
+          objectFit="cover"
+          borderColor="#101724"
+          w="150px"
+          h="95%"
+          rounded="lg"
+          ml={2}
+          mr={1}
+        />
+        <Flex
+          direction="column"
+          h="95%"
+          w="290px"
+          ml={1}
+          mr={2}
+          justify="center"
+        >
+          <Flex
+            w="full"
+            h="100%"
+            direction="column"
+            justify="center"
+            fontFamily="'Karla', sans-serif;"
+            color="gray.200"
+            fontWeight="bold"
+            ml={2}
+            overflow="hidden"
+          >
+            <Flex direction="column">
+              <chakra.h2 color="gray.400">👁 {views.toLocaleString()}</chakra.h2>
+              <chakra.h2 mt={1} fontSize="18px">
+                {title}
+              </chakra.h2>
+            </Flex>
+          </Flex>
+        </Flex>
       </Flex>
     </AnimateCard>
   );

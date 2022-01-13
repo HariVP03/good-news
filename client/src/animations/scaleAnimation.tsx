@@ -31,7 +31,7 @@ export const AnimateCard: React.FC<{ children: any; styles?: any }> = ({
 }) => {
   const variant = {
     initial: { scale: 1, shadow: 'none' },
-    hover: { scale: [1, 1.02], shadow: 'large' },
+    hover: { scale: [1, 1.04], shadow: 'large' },
   };
   const [hover, setHover] = useState(false);
 
