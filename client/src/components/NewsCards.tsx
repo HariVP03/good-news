@@ -4,13 +4,24 @@ import { AnimateCard, AnimateDiv } from '../animations/scaleAnimation';
 import months from '../utilities/month';
 
 export const NewsCardWide: React.FC<{
+  onClick: () => void;
   topic: string;
+  loading: boolean;
   title: string;
   authorName: string;
   date: Date;
   authorAvatar: string;
   thumbnail: string;
-}> = ({ topic, title, authorName, date, authorAvatar, thumbnail }) => {
+}> = ({
+  topic,
+  title,
+  onClick,
+  authorName,
+  date,
+  authorAvatar,
+  thumbnail,
+  loading,
+}) => {
   const month = months[date.getMonth()];
   const date1 = date.getDate().toString();
   const year = date.getFullYear().toString();
@@ -19,6 +30,7 @@ export const NewsCardWide: React.FC<{
   return (
     <AnimateCard styles={{ height: '300px', marginBottom: '15px' }}>
       <Flex
+        onClick={onClick}
         mx={2}
         minW="600px"
         h="300px"
@@ -30,51 +42,58 @@ export const NewsCardWide: React.FC<{
         boxShadow="lg"
         px={2}
       >
-        <Image
-          src={thumbnail}
-          objectFit="cover"
-          borderColor="#101724"
-          w="300px"
-          h="95%"
-          rounded="lg"
-          ml={2}
-          mr={1}
-        />
-        <Flex
-          direction="column"
-          h="95%"
-          w="290px"
-          ml={1}
-          mr={2}
-          justify="center"
-        >
-          <Flex
-            w="full"
-            h="95%"
-            direction="column"
-            justify="space-between"
-            fontFamily="'Karla', sans-serif;"
-            color="gray.200"
-            fontWeight="bold"
-            ml={2}
-          >
-            <Flex direction="column">
-              <chakra.h2 color="gray.400">{topic}</chakra.h2>
-              <chakra.h2 mt={3} fontSize="25px">
-                {title}
-              </chakra.h2>
-            </Flex>
-            <Flex align="center">
-              <Avatar src={authorAvatar} mr={2} />
-              <Flex direction="column" justify="center">
-                <chakra.h2 _hover={{ textDecor: 'underline' }}>
-                  {authorName}
-                </chakra.h2>
-                <chakra.h2>{formattedDate}</chakra.h2>
+        {loading ? (
+          <Spinner color="gray.400" />
+        ) : (
+          <>
+            {' '}
+            <Image
+              src={thumbnail}
+              objectFit="cover"
+              borderColor="#101724"
+              w="300px"
+              h="95%"
+              rounded="lg"
+              ml={2}
+              mr={1}
+            />
+            <Flex
+              direction="column"
+              h="95%"
+              w="290px"
+              ml={1}
+              mr={2}
+              justify="center"
+            >
+              <Flex
+                w="full"
+                h="95%"
+                direction="column"
+                justify="space-between"
+                fontFamily="'Karla', sans-serif;"
+                color="gray.200"
+                fontWeight="bold"
+                ml={2}
+              >
+                <Flex direction="column">
+                  <chakra.h2 color="gray.400">{topic}</chakra.h2>
+                  <chakra.h2 mt={3} fontSize="25px">
+                    {title}
+                  </chakra.h2>
+                </Flex>
+                <Flex align="center">
+                  <Avatar src={authorAvatar} mr={2} />
+                  <Flex direction="column" justify="center">
+                    <chakra.h2 _hover={{ textDecor: 'underline' }}>
+                      {authorName}
+                    </chakra.h2>
+                    <chakra.h2>{formattedDate}</chakra.h2>
+                  </Flex>
+                </Flex>
               </Flex>
             </Flex>
-          </Flex>
-        </Flex>
+          </>
+        )}
       </Flex>
     </AnimateCard>
   );
@@ -189,10 +208,12 @@ export const WeatherCard: React.FC<{
 };
 
 export const NewsCardSmall: React.FC<{
+  id: string;
   views: number;
+  loading?: boolean;
   title: string;
   thumbnail: string;
-}> = ({ views, title, thumbnail }) => {
+}> = ({ id, views, title, thumbnail, loading = false }) => {
   return (
     <AnimateCard styles={{ height: '150px', marginBottom: '15px' }}>
       <Flex
@@ -209,43 +230,52 @@ export const NewsCardSmall: React.FC<{
         boxShadow="lg"
         px={2}
       >
-        <Image
-          src={thumbnail}
-          objectFit="cover"
-          borderColor="#101724"
-          w="150px"
-          h="95%"
-          rounded="lg"
-          ml={2}
-          mr={1}
-        />
-        <Flex
-          direction="column"
-          h="95%"
-          w="290px"
-          ml={1}
-          mr={2}
-          justify="center"
-        >
-          <Flex
-            w="full"
-            h="100%"
-            direction="column"
-            justify="center"
-            fontFamily="'Karla', sans-serif;"
-            color="gray.200"
-            fontWeight="bold"
-            ml={2}
-            overflow="hidden"
-          >
-            <Flex direction="column">
-              <chakra.h2 color="gray.400">👁 {views.toLocaleString()}</chakra.h2>
-              <chakra.h2 mt={1} fontSize="18px">
-                {title}
-              </chakra.h2>
+        {loading ? (
+          <Spinner color="gray.400" />
+        ) : (
+          <>
+            {' '}
+            <Image
+              src={thumbnail}
+              objectFit="cover"
+              borderColor="#101724"
+              w="150px"
+              h="95%"
+              rounded="lg"
+              ml={2}
+              mr={1}
+            />
+            <Flex
+              direction="column"
+              h="95%"
+              w="290px"
+              ml={1}
+              mr={2}
+              justify="center"
+            >
+              <Flex
+                w="full"
+                h="100%"
+                direction="column"
+                justify="center"
+                fontFamily="'Karla', sans-serif;"
+                color="gray.200"
+                fontWeight="bold"
+                ml={2}
+                overflow="hidden"
+              >
+                <Flex direction="column">
+                  <chakra.h2 color="gray.400">
+                    👁 {views.toLocaleString()}
+                  </chakra.h2>
+                  <chakra.h2 mt={1} fontSize="18px">
+                    {title}
+                  </chakra.h2>
+                </Flex>
+              </Flex>
             </Flex>
-          </Flex>
-        </Flex>
+          </>
+        )}
       </Flex>
     </AnimateCard>
   );

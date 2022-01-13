@@ -24,7 +24,7 @@ const Dashboard: React.FC = () => {
         <Flex w="full" h="15%">
           <Topbar name={user?.displayName?.split(' ')[0]} />
         </Flex>
-        <Flex w="full" h="85%">
+        <Flex w="75vw" h="85%">
           <NewsSection />
         </Flex>
       </Flex>
