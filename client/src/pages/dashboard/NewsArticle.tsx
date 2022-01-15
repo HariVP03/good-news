@@ -46,7 +46,7 @@ const NewsArticle: React.FC<{
         <chakra.h2 fontSize="3rem" color="white" fontWeight="bold">
           {clickedNews.title}
         </chakra.h2>
-        <Flex align="center" mt={5} fontWeight="bold">
+        <Flex align="center" mt={3} fontWeight="bold">
           <Avatar src={clickedNews.authorAvatar} mr={2} />
           <Flex direction="column" justify="center">
             <chakra.h2 _hover={{ textDecor: 'underline' }}>
@@ -55,7 +55,7 @@ const NewsArticle: React.FC<{
             <chakra.h2>{formattedDate}</chakra.h2>
           </Flex>
         </Flex>
-        <Flex className="markdown" mt={8} maxW="100%" minH="100%">
+        <Flex className="markdown" mt={10} maxW="100%" minH="100%">
           <Markdown>{clickedNews.body}</Markdown>
         </Flex>
       </Flex>
