@@ -10,14 +10,53 @@ import {
   Tabs,
   Textarea,
 } from '@chakra-ui/react';
+import { addDoc, collection } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import React, { useState } from 'react';
-import { auth } from '../../firebase';
+import UploadThumbnail from '../../components/UploadThumbnail';
+import { auth, firestore, storage } from '../../firebase';
 import NewsArticle from './NewsArticle';
 
 const CreateArticle: React.FC = () => {
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [body, setBody] = useState('');
+  const [thumbnail, setThumbnail] = useState<File | null>();
+  const [url, setUrl] = useState('');
+
+  const onSubmitArticle = async () => {
+    if (thumbnail) {
+      const thumbnailRef = ref(
+        storage,
+        `/images/${auth.currentUser?.uid}/thumbnail/${Math.floor(
+          Math.random() * 100000,
+        )}`,
+      );
+      uploadBytes(thumbnailRef, thumbnail).then(snap => {
+        getDownloadURL(snap.ref).then(url => {
+          try {
+            if (!Boolean(topic && title && auth.currentUser && url && body))
+              return;
+            const docRef = addDoc(collection(firestore, 'news'), {
+              topic,
+              title,
+              views: 0,
+              authorName: auth.currentUser?.displayName,
+              date: new Date(),
+              authorAvatar: auth.currentUser?.photoURL,
+              thumbnail: url,
+              body,
+              featured: false,
+            });
+          } catch (e) {
+            console.log(e);
+          }
+          setThumbnail(null);
+        });
+      });
+    }
+  };
+
   return (
     <Flex
       fontFamily="'Karla', sans-serif;"
@@ -86,6 +125,10 @@ const CreateArticle: React.FC = () => {
               h="90vh"
               fontSize="18px"
             />
+            <UploadThumbnail
+              setThumbnail={setThumbnail}
+              thumbnail={thumbnail}
+            />
             <Flex mt={5} justify="center">
               <Button
                 variant="ghost"
@@ -100,7 +143,12 @@ const CreateArticle: React.FC = () => {
               >
                 Clear
               </Button>
-              <Button variant="ghost" bg="#1B51F0" _hover={{ bg: 'blue.400' }}>
+              <Button
+                onClick={onSubmitArticle}
+                variant="ghost"
+                bg="#1B51F0"
+                _hover={{ bg: 'blue.400' }}
+              >
                 Submit
               </Button>
             </Flex>
