@@ -208,15 +208,18 @@ export const WeatherCard: React.FC<{
 };
 
 export const NewsCardSmall: React.FC<{
+  onClick: () => void;
+  topic: string;
   id: string;
   views: number;
   loading?: boolean;
   title: string;
   thumbnail: string;
-}> = ({ id, views, title, thumbnail, loading = false }) => {
+}> = ({ id, views, title, thumbnail, loading = false, topic, onClick }) => {
   return (
     <AnimateCard styles={{ height: '150px', marginBottom: '15px' }}>
       <Flex
+        onClick={onClick}
         mx={2}
         w="350px"
         py={2}
@@ -268,9 +271,10 @@ export const NewsCardSmall: React.FC<{
                   <chakra.h2 color="gray.400">
                     👁 {views.toLocaleString()}
                   </chakra.h2>
-                  <chakra.h2 mt={1} fontSize="18px">
-                    {title}
+                  <chakra.h2 color="gray.400" mb={1}>
+                    {topic}
                   </chakra.h2>
+                  <chakra.h2 fontSize="18px">{title}</chakra.h2>
                 </Flex>
               </Flex>
             </Flex>

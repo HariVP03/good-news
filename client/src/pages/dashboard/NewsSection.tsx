@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { chakra, Flex, Skeleton, Spinner } from '@chakra-ui/react';
+import { IconButton, chakra, Flex, Skeleton, Spinner } from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
   NewsCardSmall,
   NewsCardWide,
@@ -9,6 +10,7 @@ import { key } from '../../weather';
 import '../../css/hideScrollbar.css';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { firestore } from '../../firebase';
+import NewsArticle from './NewsArticle';
 
 const NewsSection: React.FC = () => {
   const [city, setCity] = useState('New Delhi');
@@ -18,6 +20,18 @@ const NewsSection: React.FC = () => {
   const [loadingNews, setLoadingNews] = useState(true);
   const [news, setNews] = useState<any>([]);
   const [featured, setFeatured] = useState<any>();
+  const [isOpen, setIsOpen] = useState(false);
+  const [clickedNews, setClickedNews] = useState<
+    | {
+        title: string;
+        topic: string;
+        body: string;
+        authorName: string;
+        authorAvatar: string;
+        date: Date;
+      }
+    | any
+  >();
 
   const getNews = async () => {
     const query = await getDocs(collection(firestore, 'news'));
@@ -27,7 +41,6 @@ const NewsSection: React.FC = () => {
       const id = doc.id;
       console.log(data.date.toDate());
       if (data.featured) {
-        console.log(data);
         setFeatured(data);
       } else {
         setNews((prev: any) => {
@@ -89,75 +102,96 @@ const NewsSection: React.FC = () => {
       position="absolute"
       h="full"
       bg="gray.800"
-      p={5}
       direction="column"
+      p={isOpen ? 0 : 5}
       pb="15vh"
     >
-      <Flex justify="start" flexWrap="wrap">
-        {loadingNews ? (
-          <NewsCardWide
-            authorAvatar="No"
-            authorName="No"
-            date={new Date()}
-            thumbnail="No"
-            title="No"
-            topic="No"
-            loading={loadingNews}
-            onClick={() => {
-              console.log(news);
-              console.log(featured);
-            }}
-          />
-        ) : (
-          <NewsCardWide
-            authorAvatar={featured?.authorAvatar}
-            authorName={featured?.authorName}
-            date={featured?.date.toDate()}
-            thumbnail={featured?.thumbnail}
-            title={featured?.title}
-            topic={featured?.topic}
-            loading={loadingNews}
-            onClick={() => {
-              console.log(news);
-              console.log(loadingNews);
-            }}
-          />
-        )}
-        <WeatherCard
-          loading={loading}
-          city={data?.name}
-          humidity={data?.main.humidity}
-          minTemp={data?.main.temp_min}
-          maxTemp={data?.main.temp_max}
-          pressure={data?.main.pressure}
-          desc={data?.weather[0].description}
-          icon={icon}
-          temp={data?.main.temp}
+      {isOpen ? (
+        <NewsArticle
+          clickedNews={clickedNews}
+          onBack={() => {
+            setIsOpen(false);
+          }}
         />
-      </Flex>
-      <Flex maxW="100%" justify="start" flexWrap="wrap">
-        {loadingNews ? (
-          <NewsCardSmall
-            id="No"
-            thumbnail="No Thumbnail"
-            title="No title"
-            views={0}
-            loading={loadingNews}
-          />
-        ) : (
-          news?.map((e: any) => {
-            return (
+      ) : (
+        <>
+          <Flex justify="start" flexWrap="wrap">
+            <NewsCardWide
+              authorAvatar={featured?.authorAvatar || 'No'}
+              authorName={featured?.authorName || 'No'}
+              date={featured?.date.toDate() || new Date()}
+              thumbnail={featured?.thumbnail || 'No'}
+              title={featured?.title || 'No'}
+              topic={featured?.topic || 'No'}
+              loading={loadingNews}
+              onClick={() => {
+                setClickedNews({
+                  title: featured?.title,
+                  topic: featured?.topic,
+                  authorName: featured?.authorName,
+                  authorAvatar: featured?.authorAvatar,
+                  date: featured?.date.toDate(),
+                  body: featured?.body,
+                });
+
+                setIsOpen(true);
+              }}
+            />
+            <WeatherCard
+              loading={loading}
+              city={data?.name}
+              humidity={data?.main.humidity}
+              minTemp={data?.main.temp_min}
+              maxTemp={data?.main.temp_max}
+              pressure={data?.main.pressure}
+              desc={data?.weather[0].description}
+              icon={icon}
+              temp={data?.main.temp}
+            />
+          </Flex>
+          <Flex maxW="100%" justify="start" flexWrap="wrap">
+            {loadingNews ? (
               <NewsCardSmall
-                key={e.id}
-                id={e.id}
-                thumbnail={e.thumbnail}
-                title={e.title}
-                views={e.views}
+                id="No"
+                thumbnail="No Thumbnail"
+                title="No title"
+                views={0}
+                topic="No"
+                loading={loadingNews}
+                onClick={() => {}}
               />
-            );
-          })
-        )}
-      </Flex>
+            ) : (
+              news?.map((e: any) => {
+                return (
+                  <NewsCardSmall
+                    onClick={() => {
+                      news?.forEach((r: any) => {
+                        if (r.id === e.id) {
+                          setClickedNews({
+                            title: r?.title,
+                            topic: r?.topic,
+                            authorName: r?.authorName,
+                            authorAvatar: r?.authorAvatar,
+                            date: r?.date.toDate(),
+                            body: r?.body,
+                          });
+                          setIsOpen(true);
+                        }
+                      });
+                    }}
+                    key={e.id}
+                    id={e.id}
+                    thumbnail={e.thumbnail}
+                    topic={e.topic}
+                    title={e.title}
+                    views={e.views}
+                  />
+                );
+              })
+            )}
+          </Flex>
+        </>
+      )}
     </Flex>
   );
 };

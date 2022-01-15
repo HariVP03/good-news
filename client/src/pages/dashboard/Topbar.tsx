@@ -1,4 +1,4 @@
-import { chakra, Flex, Image } from '@chakra-ui/react';
+import { chakra, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 const Topbar: React.FC<{ name: string | undefined }> = ({ name }) => {
