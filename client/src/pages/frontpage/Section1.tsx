@@ -7,10 +7,10 @@ import {
   Button,
   Icon,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AnimateDiv } from '../../animations/scaleAnimation';
 import { auth, provider } from '../../firebase';
-import { signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { navigate } from '@reach/router';
 
 const S1: React.FC = () => {
@@ -19,6 +19,12 @@ const S1: React.FC = () => {
       navigate('/dashboard');
     });
   };
+
+  onAuthStateChanged(auth, res => {
+    if (res) {
+      navigate('/dashboard');
+    }
+  });
 
   return (
     <Flex
