@@ -17,25 +17,30 @@ const NewsArticle: React.FC<{
       }
     | any;
   onBack: () => void;
-}> = ({ clickedNews, onBack }) => {
+  previewMode?: boolean;
+}> = ({ clickedNews, onBack, previewMode = false }) => {
   const month = months[clickedNews.date.getMonth()];
   const date1 = clickedNews.date.getDate().toString();
   const year = clickedNews.date.getFullYear().toString();
   const formattedDate = `${month} ${date1}, ${year}`;
   return (
     <>
-      <Flex px={2} w="100%" h="10%" align="center">
-        <IconButton
-          color="gray.400"
-          border="0px"
-          _hover={{ color: 'black', bg: 'gray.400' }}
-          variant="outline"
-          rounded="full"
-          aria-label="Go Back"
-          icon={<ArrowBackIcon />}
-          onClick={onBack}
-        />
-      </Flex>
+      {!previewMode ? (
+        <Flex px={2} w="100%" h="10%" align="center">
+          <IconButton
+            color="gray.400"
+            border="0px"
+            _hover={{ color: 'black', bg: 'gray.400' }}
+            variant="outline"
+            rounded="full"
+            aria-label="Go Back"
+            icon={<ArrowBackIcon />}
+            onClick={onBack}
+          />
+        </Flex>
+      ) : (
+        ''
+      )}
       <Flex
         direction="column"
         px={12}
