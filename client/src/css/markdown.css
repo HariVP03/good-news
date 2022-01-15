@@ -1,5 +1,6 @@
 .markdown {
   font-size: 18px;
+  white-space: pre-line;
 }
 
 .markdown h1 {

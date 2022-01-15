@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Avatar, Button, chakra, Flex } from '@chakra-ui/react';
 import { navigate } from '@reach/router';
 import Clock from 'react-live-clock';
 import months from '../../utilities/month';
 
-const PanelButton: React.FC<{ children: string; onClick: () => void }> = ({
-  children,
-  onClick,
-}) => {
+const PanelButton: React.FC<{
+  children: string;
+  onClick: () => void;
+  disabled?: boolean;
+}> = ({ children, onClick, disabled = false }) => {
   return (
     <Button
       onClick={onClick}
       fontFamily="'Karla', sans-serif;"
       bg="#101724"
       h="50px"
+      isDisabled={disabled}
       my={2}
       rounded="lg"
       _hover={{ bg: '#323739' }}
@@ -26,14 +28,16 @@ const PanelButton: React.FC<{ children: string; onClick: () => void }> = ({
   );
 };
 
-const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
-  profilePhoto,
-}) => {
+const SidePanel: React.FC<{
+  profilePhoto: string | undefined | null;
+  toggleAuthor: () => void;
+}> = ({ profilePhoto, toggleAuthor }) => {
   const dateObj = new Date();
   const date = dateObj.getDate().toString();
   const month = months[dateObj.getMonth()];
   const year = dateObj.getFullYear().toString();
   const formattedDate = `${month} ${date}, ${year}`;
+
   return (
     <Flex zIndex="10" position="static" w="full" h="full" direction="column">
       <Flex
@@ -65,7 +69,7 @@ const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
       <Flex w="full" h="75%" mt={4} direction="column">
         <PanelButton
           onClick={() => {
-            navigate('/');
+            navigate('/dashboard');
           }}
         >
           Home
@@ -74,9 +78,11 @@ const SidePanel: React.FC<{ profilePhoto: string | undefined | null }> = ({
           onClick={() => {
             navigate('/');
           }}
+          disabled
         >
           Subscribe to Newsletter
         </PanelButton>
+        <PanelButton onClick={toggleAuthor}>Become an author</PanelButton>
         <PanelButton
           onClick={() => {
             navigate('/');

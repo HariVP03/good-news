@@ -6,9 +6,11 @@ import NewsSection from './NewsSection';
 import { navigate } from '@reach/router';
 import { auth } from '../../firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
+import CreateArticle from './CreateArticle';
 
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [author, setAuthor] = useState(false);
   onAuthStateChanged(auth, res => {
     setUser(res);
     if (!res) {
@@ -18,14 +20,19 @@ const Dashboard: React.FC = () => {
   return (
     <Flex maxW="100vw" h="100vh" bg="#101724">
       <Flex h="100%" w="25%" overflow="hidden">
-        <SidePanel profilePhoto={user?.photoURL} />
+        <SidePanel
+          toggleAuthor={() => {
+            setAuthor(!author);
+          }}
+          profilePhoto={user?.photoURL}
+        />
       </Flex>
       <Flex direction="column" h="100%" w="75%">
         <Flex w="full" h="15%">
           <Topbar name={user?.displayName?.split(' ')[0]} />
         </Flex>
         <Flex w="75vw" h="85%">
-          <NewsSection />
+          {author ? <CreateArticle /> : <NewsSection />}
         </Flex>
       </Flex>
     </Flex>
