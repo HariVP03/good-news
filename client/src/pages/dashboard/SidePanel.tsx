@@ -3,6 +3,7 @@ import { Avatar, Button, chakra, Flex } from '@chakra-ui/react';
 import { navigate } from '@reach/router';
 import Clock from 'react-live-clock';
 import months from '../../utilities/month';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 
 const PanelButton: React.FC<{
   children: string;
@@ -30,8 +31,8 @@ const PanelButton: React.FC<{
 
 const SidePanel: React.FC<{
   profilePhoto: string | undefined | null;
-  toggleAuthor: () => void;
-}> = ({ profilePhoto, toggleAuthor }) => {
+  createMode: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ profilePhoto, createMode }) => {
   const dateObj = new Date();
   const date = dateObj.getDate().toString();
   const month = months[dateObj.getMonth()];
@@ -69,6 +70,7 @@ const SidePanel: React.FC<{
       <Flex w="full" h="75%" mt={4} direction="column">
         <PanelButton
           onClick={() => {
+            createMode(false);
             navigate('/dashboard');
           }}
         >
@@ -82,7 +84,13 @@ const SidePanel: React.FC<{
         >
           Subscribe to Newsletter
         </PanelButton>
-        <PanelButton onClick={toggleAuthor}>Become an author</PanelButton>
+        <PanelButton
+          onClick={() => {
+            createMode(true);
+          }}
+        >
+          Become an author
+        </PanelButton>
         <PanelButton
           onClick={() => {
             navigate('/');
