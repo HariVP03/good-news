@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, chakra, Flex, Icon, Image, Spinner } from '@chakra-ui/react';
 import { AnimateCard, AnimateDiv } from '../animations/scaleAnimation';
 import months from '../utilities/month';
+import { ViewIcon } from '@chakra-ui/icons';
 
 export const NewsCardWide: React.FC<{
   onClick: () => void;
@@ -28,12 +29,12 @@ export const NewsCardWide: React.FC<{
   const formattedDate = `${month} ${date1}, ${year}`;
 
   return (
-    <AnimateCard styles={{ height: '300px', marginBottom: '15px' }}>
+    <AnimateCard styles={{ maxHeight: '100%', maxWidth: '100%' }}>
       <Flex
         onClick={onClick}
         mx={2}
-        minW="600px"
-        h="300px"
+        w={['400px', '400px', '500px', '600px']}
+        h={['200px', '200px', '250px', '300px']}
         cursor="pointer"
         bg="#101724"
         rounded="lg"
@@ -51,7 +52,7 @@ export const NewsCardWide: React.FC<{
               src={thumbnail}
               objectFit="cover"
               borderColor="#101724"
-              w="300px"
+              w="50%"
               h="95%"
               rounded="lg"
               ml={2}
@@ -77,17 +78,22 @@ export const NewsCardWide: React.FC<{
               >
                 <Flex direction="column">
                   <chakra.h2 color="gray.400">{topic}</chakra.h2>
-                  <chakra.h2 mt={3} fontSize="25px">
+                  <chakra.h2 mt={3} fontSize={['18px', '18px', '20px', '25px']}>
                     {title}
                   </chakra.h2>
                 </Flex>
                 <Flex align="center">
                   <Avatar src={authorAvatar} mr={2} />
                   <Flex direction="column" justify="center">
-                    <chakra.h2 _hover={{ textDecor: 'underline' }}>
+                    <chakra.h2
+                      _hover={{ textDecor: 'underline' }}
+                      fontSize={['14px', '14px', '16px', '18px']}
+                    >
                       {authorName}
                     </chakra.h2>
-                    <chakra.h2>{formattedDate}</chakra.h2>
+                    <chakra.h2 fontSize={['14px', '14px', '16px', '18px']}>
+                      {formattedDate}
+                    </chakra.h2>
                   </Flex>
                 </Flex>
               </Flex>
@@ -126,11 +132,17 @@ export const WeatherCard: React.FC<{
     return r + f.slice(1, f.length);
   };
   return (
-    <AnimateCard styles={{ height: '300px', marginBottom: '15px' }}>
+    <AnimateCard
+      styles={{
+        maxHeight: '100%',
+        maxWidth: '300px',
+        marginBottom: '15px',
+      }}
+    >
       <Flex
-        mx={2}
         w="300px"
-        h="300"
+        mx={2}
+        h="300px"
         cursor="pointer"
         bg="#101724"
         rounded="lg"
@@ -268,8 +280,13 @@ export const NewsCardSmall: React.FC<{
                 overflow="hidden"
               >
                 <Flex direction="column">
-                  <chakra.h2 color="gray.400">
-                    👁 {views.toLocaleString()}
+                  <chakra.h2
+                    display="flex"
+                    alignItems="center"
+                    color="gray.400"
+                  >
+                    <ViewIcon />
+                    &nbsp;{views.toLocaleString()}
                   </chakra.h2>
                   <chakra.h2 color="gray.400" mb={1}>
                     {topic}

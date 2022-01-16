@@ -83,7 +83,7 @@ const NewsSection: React.FC = () => {
       h="full"
       bg="gray.800"
       direction="column"
-      p={isOpen ? 0 : 5}
+      pt={3}
       pb="15vh"
     >
       {isOpen ? (
@@ -95,7 +95,18 @@ const NewsSection: React.FC = () => {
         />
       ) : (
         <>
-          <Flex justify="start" flexWrap="wrap">
+          <Flex
+            direction={[
+              'column-reverse',
+              'column-reverse',
+              'column-reverse',
+              'column-reverse',
+              'row',
+            ]}
+            justify="start"
+            flexWrap="wrap"
+            w="100%"
+          >
             <NewsCardWide
               authorAvatar={featured?.authorAvatar || 'No'}
               authorName={featured?.authorName || 'No'}
@@ -129,7 +140,7 @@ const NewsSection: React.FC = () => {
               temp={data?.main.temp}
             />
           </Flex>
-          <Flex maxW="100%" justify="start" flexWrap="wrap">
+          <Flex mt={5} w="75%" flexWrap="wrap">
             {loadingNews ? (
               <NewsCardSmall
                 id="No"

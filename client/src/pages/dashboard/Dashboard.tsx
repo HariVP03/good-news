@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Flex } from '@chakra-ui/react';
+import {
+  Button,
+  Drawer,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerOverlay,
+  Flex,
+  IconButton,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import SidePanel from './SidePanel';
 import Topbar from './Topbar';
 import NewsSection from './NewsSection';
@@ -17,16 +27,27 @@ const Dashboard: React.FC = () => {
       navigate('/');
     }
   });
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Flex maxW="100vw" h="100vh" bg="#101724">
-      <Flex h="100%" w="25%" overflow="hidden">
-        <SidePanel createMode={setAuthor} profilePhoto={user?.photoURL} />
+      <Flex h="100%" zIndex="4" overflow="hidden">
+        <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <SidePanel
+              onClose={onClose}
+              createMode={setAuthor}
+              profilePhoto={user?.photoURL}
+            />
+          </DrawerContent>
+        </Drawer>
       </Flex>
       <Flex direction="column" h="100%" w="75%">
         <Flex w="full" h="15%">
-          <Topbar name={user?.displayName?.split(' ')[0]} />
+          <Topbar onOpen={onOpen} name={user?.displayName?.split(' ')[0]} />
         </Flex>
-        <Flex w="75vw" h="85%">
+        <Flex w="100vw" h="85%">
           {author ? <CreateArticle /> : <NewsSection />}
         </Flex>
       </Flex>

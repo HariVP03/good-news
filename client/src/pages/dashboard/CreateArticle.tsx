@@ -60,7 +60,7 @@ const CreateArticle: React.FC = () => {
   return (
     <Flex
       fontFamily="'Karla', sans-serif;"
-      w="75%"
+      w="100%"
       h="full"
       bg="gray.800"
       overflowY="scroll"

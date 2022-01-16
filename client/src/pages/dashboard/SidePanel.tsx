@@ -3,7 +3,7 @@ import { Avatar, Button, chakra, Flex } from '@chakra-ui/react';
 import { navigate } from '@reach/router';
 import Clock from 'react-live-clock';
 import months from '../../utilities/month';
-import { setUncaughtExceptionCaptureCallback } from 'process';
+import { EditIcon } from '@chakra-ui/icons';
 
 const PanelButton: React.FC<{
   children: string;
@@ -22,7 +22,7 @@ const PanelButton: React.FC<{
       _hover={{ bg: '#323739' }}
       color="white"
       fontWeight="bold"
-      fontSize="18px"
+      fontSize={['14px', '14px', '16px', '18px']}
     >
       {children}
     </Button>
@@ -32,7 +32,8 @@ const PanelButton: React.FC<{
 const SidePanel: React.FC<{
   profilePhoto: string | undefined | null;
   createMode: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ profilePhoto, createMode }) => {
+  onClose: () => void;
+}> = ({ profilePhoto, createMode, onClose }) => {
   const dateObj = new Date();
   const date = dateObj.getDate().toString();
   const month = months[dateObj.getMonth()];
@@ -40,28 +41,29 @@ const SidePanel: React.FC<{
   const formattedDate = `${month} ${date}, ${year}`;
 
   return (
-    <Flex zIndex="10" position="static" w="full" h="full" direction="column">
-      <Flex
-        w="full"
-        direction="column"
-        p={10}
-        align="center"
-        h="25%"
-        borderBottom="1px solid"
-        borderBottomColor="gray.700"
-      >
+    <Flex
+      bg="#101724"
+      zIndex="10"
+      position="static"
+      w="100%"
+      h="full"
+      direction="column"
+    >
+      <Flex w="full" direction="column" p={10} align="center" h="25%">
         <Avatar src={profilePhoto || ''} size="md" />
         <chakra.h2
-          fontSize="18px"
+          fontSize={['14px', '14px', '16px', '18px']}
           color="gray.200"
           mt={2}
+          textAlign="center"
           fontFamily="'Karla', sans-serif;"
         >
           {formattedDate}
         </chakra.h2>
         <chakra.h2
-          fontSize="18px"
+          fontSize={['14px', '14px', '16px', '18px']}
           color="gray.400"
+          textAlign="center"
           fontFamily="'Karla', sans-serif;"
         >
           <Clock format="h:mm A" ticking />
@@ -72,6 +74,7 @@ const SidePanel: React.FC<{
           onClick={() => {
             createMode(false);
             navigate('/dashboard');
+            onClose();
           }}
         >
           Home
@@ -79,14 +82,16 @@ const SidePanel: React.FC<{
         <PanelButton
           onClick={() => {
             navigate('/');
+            onClose();
           }}
           disabled
         >
-          Subscribe to Newsletter
+          Subscribe
         </PanelButton>
         <PanelButton
           onClick={() => {
             createMode(true);
+            onClose();
           }}
         >
           Become an author
@@ -94,9 +99,10 @@ const SidePanel: React.FC<{
         <PanelButton
           onClick={() => {
             navigate('/');
+            onClose();
           }}
         >
-          Back to the frontpage
+          Back
         </PanelButton>
       </Flex>
     </Flex>
