@@ -34,9 +34,14 @@ const S1: React.FC = () => {
       justify="center"
       align="center"
     >
-      <Flex minH="100vh" p={3} direction="column">
+      <Flex
+        minH="100vh"
+        p={3}
+        direction="column"
+        display={['none', 'none', 'flex', 'flex']}
+      >
         <Heading
-          fontSize="80px"
+          fontSize={['40px', '40px', '60px', '80px']}
           mt="18%"
           ml="15%"
           w="60%"
@@ -52,7 +57,7 @@ const S1: React.FC = () => {
           w="60%"
           fontFamily="'Karla', sans-serif;"
           color="gray.300"
-          fontSize="27px"
+          fontSize={['23px', '25px', '27px']}
         >
           <chakra.span color="gray.500">Read news</chakra.span> from all over
           the world{' '}
@@ -78,6 +83,7 @@ const S1: React.FC = () => {
           pb={4}
           minH="450px"
           bg="white"
+          minW="300px"
           rounded="3xl"
         >
           <Flex h="45%" mt="4%" rounded="2xl" w="92%" p={3} bg="red.300">
