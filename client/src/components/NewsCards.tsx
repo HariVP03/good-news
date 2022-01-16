@@ -33,8 +33,8 @@ export const NewsCardWide: React.FC<{
       <Flex
         onClick={onClick}
         mx={2}
-        w={['400px', '400px', '500px', '600px']}
-        h={['200px', '200px', '250px', '300px']}
+        w={['350px', '400px', '500px', '600px']}
+        h={['250px', '200px', '250px', '300px']}
         cursor="pointer"
         bg="#101724"
         rounded="lg"

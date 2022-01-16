@@ -103,7 +103,8 @@ const NewsSection: React.FC = () => {
               'column-reverse',
               'row',
             ]}
-            justify="start"
+            justify={['end', 'end', 'end', 'end', 'center']}
+            align={['center', 'center', 'center', 'center', 'start']}
             flexWrap="wrap"
             w="100%"
           >
@@ -140,7 +141,7 @@ const NewsSection: React.FC = () => {
               temp={data?.main.temp}
             />
           </Flex>
-          <Flex mt={5} w="75%" flexWrap="wrap">
+          <Flex mt={5} w="100%" flexWrap="wrap" justify="center">
             {loadingNews ? (
               <NewsCardSmall
                 id="No"

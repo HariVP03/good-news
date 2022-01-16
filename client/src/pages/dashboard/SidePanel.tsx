@@ -102,7 +102,7 @@ const SidePanel: React.FC<{
             onClose();
           }}
         >
-          Back
+          Back to frontpage
         </PanelButton>
       </Flex>
     </Flex>
