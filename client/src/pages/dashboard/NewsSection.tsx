@@ -54,7 +54,7 @@ const NewsSection: React.FC = () => {
   };
 
   const getWeather = (city: string) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
     fetch(url).then((res: any) => {
       res.json().then((data: any) => {
         console.log(data);

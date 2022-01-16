@@ -162,7 +162,7 @@ export const WeatherCard: React.FC<{
                 <Flex align="center">
                   <chakra.h2 fontsize="18px">{temp}</chakra.h2>
                   <chakra.h2 fontSize="18px" color="gray.400">
-                    °F
+                    °c
                   </chakra.h2>
                 </Flex>
                 <chakra.h2 fontSize="20px" color="gray.400">
@@ -174,7 +174,7 @@ export const WeatherCard: React.FC<{
                   </chakra.h2>
                   <chakra.h2>{minTemp}</chakra.h2>
                   <chakra.h2 fontSize="18px" color="gray.400">
-                    °F
+                    °c
                   </chakra.h2>
                 </Flex>
                 <Flex align="center">
@@ -183,7 +183,7 @@ export const WeatherCard: React.FC<{
                   </chakra.h2>
                   <chakra.h2>{maxTemp}</chakra.h2>
                   <chakra.h2 fontSize="18px" color="gray.400">
-                    °F
+                    °c
                   </chakra.h2>
                 </Flex>
                 <Flex align="center">
