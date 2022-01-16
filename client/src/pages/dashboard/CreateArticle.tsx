@@ -26,8 +26,10 @@ const CreateArticle: React.FC<{
   const [body, setBody] = useState('');
   const [thumbnail, setThumbnail] = useState<File | null>();
   const [url, setUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onSubmitArticle = async () => {
+    setLoading(true);
     if (thumbnail) {
       const thumbnailRef = ref(
         storage,
@@ -51,6 +53,7 @@ const CreateArticle: React.FC<{
               body,
               featured: false,
             });
+            setLoading(false);
             createMode(false);
           } catch (e) {
             console.log(e);
@@ -151,6 +154,8 @@ const CreateArticle: React.FC<{
                 onClick={onSubmitArticle}
                 variant="ghost"
                 bg="#1B51F0"
+                isLoading={loading}
+                loadingText="Submitting"
                 _hover={{ bg: 'blue.400' }}
               >
                 Submit
