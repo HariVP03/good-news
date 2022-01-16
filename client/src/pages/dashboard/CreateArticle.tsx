@@ -25,7 +25,6 @@ const CreateArticle: React.FC<{
   const [topic, setTopic] = useState('');
   const [body, setBody] = useState('');
   const [thumbnail, setThumbnail] = useState<File | null>();
-  const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
   const onSubmitArticle = async () => {
@@ -45,7 +44,7 @@ const CreateArticle: React.FC<{
             const docRef = addDoc(collection(firestore, 'news'), {
               topic,
               title,
-              views: 0,
+              views: [],
               authorName: auth.currentUser?.displayName,
               date: new Date(),
               authorAvatar: auth.currentUser?.photoURL,

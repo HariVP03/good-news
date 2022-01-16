@@ -8,8 +8,16 @@ import {
 } from '../../components/NewsCards';
 import { key } from '../../weather';
 import '../../css/hideScrollbar.css';
-import { collection, getDocs, addDoc, Timestamp } from 'firebase/firestore';
-import { firestore } from '../../firebase';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  Timestamp,
+  doc,
+  updateDoc,
+  arrayUnion,
+} from 'firebase/firestore';
+import { auth, firestore } from '../../firebase';
 import NewsArticle from './NewsArticle';
 
 const NewsSection: React.FC = () => {
@@ -39,7 +47,6 @@ const NewsSection: React.FC = () => {
     query.forEach(doc => {
       const data = doc.data();
       const id = doc.id;
-      console.log(data.date.toDate());
       if (data.featured) {
         setFeatured(data);
       } else {
@@ -109,14 +116,14 @@ const NewsSection: React.FC = () => {
             w="100%"
           >
             <NewsCardWide
-              authorAvatar={featured?.authorAvatar || 'No'}
-              authorName={featured?.authorName || 'No'}
+              authorAvatar={featured?.authorAvatar || 'An error occured'}
+              authorName={featured?.authorName || 'An error occured'}
               date={featured?.date.toDate() || new Date()}
-              thumbnail={featured?.thumbnail || 'No'}
-              title={featured?.title || 'No'}
-              topic={featured?.topic || 'No'}
+              thumbnail={featured?.thumbnail || 'An error occured'}
+              title={featured?.title || 'An error occured'}
+              topic={featured?.topic || 'An error occured'}
               loading={loadingNews}
-              onClick={() => {
+              onClick={async () => {
                 setClickedNews({
                   title: featured?.title,
                   topic: featured?.topic,
@@ -125,7 +132,14 @@ const NewsSection: React.FC = () => {
                   date: featured?.date.toDate(),
                   body: featured?.body,
                 });
-
+                let email = auth.currentUser?.email;
+                const views = featured?.views;
+                if (email && !views.includes(email)) {
+                  const docRef = doc(firestore, 'news', featured?.id);
+                  await updateDoc(docRef, {
+                    views: arrayUnion(email),
+                  });
+                }
                 setIsOpen(true);
               }}
             />
@@ -147,7 +161,7 @@ const NewsSection: React.FC = () => {
                 id="No"
                 thumbnail="No Thumbnail"
                 title="No title"
-                views={0}
+                views={[]}
                 topic="No"
                 loading={loadingNews}
                 onClick={() => {}}
@@ -156,8 +170,9 @@ const NewsSection: React.FC = () => {
               news?.map((e: any) => {
                 return (
                   <NewsCardSmall
-                    onClick={() => {
-                      news?.forEach((r: any) => {
+                    onClick={async () => {
+                      for (let i = 0; i < news?.length; i++) {
+                        const r = news[i];
                         if (r.id === e.id) {
                           setClickedNews({
                             title: r?.title,
@@ -167,11 +182,16 @@ const NewsSection: React.FC = () => {
                             date: new Date(r?.date.seconds * 1000),
                             body: r?.body,
                           });
+                          let email = auth.currentUser?.email;
+                          if (email && !r.views.includes(email)) {
+                            const docRef = doc(firestore, 'news', r.id);
+                            await updateDoc(docRef, {
+                              views: arrayUnion(email),
+                            });
+                          }
                           setIsOpen(true);
-                        } else {
-                          console.log(321);
                         }
-                      });
+                      }
                     }}
                     key={e.id}
                     id={e.id}

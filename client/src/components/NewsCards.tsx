@@ -229,7 +229,7 @@ export const NewsCardSmall: React.FC<{
   onClick: () => void;
   topic: string;
   id: string;
-  views: number;
+  views: string[];
   loading?: boolean;
   title: string;
   thumbnail: string;
@@ -292,7 +292,7 @@ export const NewsCardSmall: React.FC<{
                     color="gray.400"
                   >
                     <ViewIcon />
-                    &nbsp;{views.toLocaleString()}
+                    &nbsp;{views?.length?.toLocaleString()}
                   </chakra.h2>
                   <chakra.h2 color="gray.400" mb={1} maxBlockSize="md">
                     {topic}
