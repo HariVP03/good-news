@@ -77,8 +77,14 @@ export const NewsCardWide: React.FC<{
                 ml={2}
               >
                 <Flex direction="column">
-                  <chakra.h2 color="gray.400">{topic}</chakra.h2>
-                  <chakra.h2 mt={3} fontSize={['18px', '18px', '20px', '25px']}>
+                  <chakra.h2 color="gray.400" maxBlockSize="md">
+                    {topic}
+                  </chakra.h2>
+                  <chakra.h2
+                    maxBlockSize="md"
+                    mt={3}
+                    fontSize={['18px', '18px', '20px', '25px']}
+                  >
                     {title}
                   </chakra.h2>
                 </Flex>
@@ -288,10 +294,12 @@ export const NewsCardSmall: React.FC<{
                     <ViewIcon />
                     &nbsp;{views.toLocaleString()}
                   </chakra.h2>
-                  <chakra.h2 color="gray.400" mb={1}>
+                  <chakra.h2 color="gray.400" mb={1} maxBlockSize="md">
                     {topic}
                   </chakra.h2>
-                  <chakra.h2 fontSize="18px">{title}</chakra.h2>
+                  <chakra.h2 fontSize="18px" noOfLines={2} maxBlockSize="md">
+                    {title}
+                  </chakra.h2>
                 </Flex>
               </Flex>
             </Flex>

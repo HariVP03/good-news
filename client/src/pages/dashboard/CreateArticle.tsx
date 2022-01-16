@@ -10,6 +10,7 @@ import {
   Tabs,
   Textarea,
 } from '@chakra-ui/react';
+import { navigate } from '@reach/router';
 import { addDoc, collection } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import React, { useState } from 'react';
@@ -17,7 +18,9 @@ import UploadThumbnail from '../../components/UploadThumbnail';
 import { auth, firestore, storage } from '../../firebase';
 import NewsArticle from './NewsArticle';
 
-const CreateArticle: React.FC = () => {
+const CreateArticle: React.FC<{
+  createMode: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ createMode }) => {
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [body, setBody] = useState('');
@@ -48,6 +51,7 @@ const CreateArticle: React.FC = () => {
               body,
               featured: false,
             });
+            createMode(false);
           } catch (e) {
             console.log(e);
           }

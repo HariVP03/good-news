@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
           <Topbar onOpen={onOpen} name={user?.displayName?.split(' ')[0]} />
         </Flex>
         <Flex w="100vw" h="85%">
-          {author ? <CreateArticle /> : <NewsSection />}
+          {author ? <CreateArticle createMode={setAuthor} /> : <NewsSection />}
         </Flex>
       </Flex>
     </Flex>
